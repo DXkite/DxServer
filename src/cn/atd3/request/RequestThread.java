@@ -36,19 +36,21 @@ public class RequestThread extends Thread {
 			Log.i("Run","Parser Request");
 			Request rq=new Request(socket.getInputStream());
 			Response rp=null;
+			int status=404;
 			for (RequestParser parser:parsers){
 				rp=parser.parserRequest(rq);
-				if (rp!=null) break;
+				if ((status=parser.getStatus())!=404) break;
 			}
+			
 			if (rp!=null){
 				rp.writeOutput(socket.getOutputStream());
 			}
 			else{
 				rp=new Response();
 				Log.i("Run", "File No Find "+rq.getUrl());
-				rp.setStatus(404);
+				rp.setStatus(status);
 				rp.setType("txt");
-				String body=new String("404");
+				String body=new String(""+status);
 				rp.setBody(body.getBytes());
 				rp.writeOutput(socket.getOutputStream());
 			}

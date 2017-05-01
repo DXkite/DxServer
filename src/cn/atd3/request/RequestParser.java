@@ -13,4 +13,5 @@ import cn.atd3.response.Response;
  */
 public interface RequestParser {
 	public Response parserRequest(Request rq);
+	public int getStatus();
 }

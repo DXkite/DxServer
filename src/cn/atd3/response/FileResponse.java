@@ -22,6 +22,7 @@ public class FileResponse implements RequestParser {
 	private Request request;
 	private Response response;
 	private String url;
+	private int status = 0;
 
 	public FileResponse() {
 		response = new Response();
@@ -31,18 +32,26 @@ public class FileResponse implements RequestParser {
 	public Response parserRequest(Request rq) {
 		request = rq;
 		url = rq.getUrl();
-		File file = new File(Config.get("ServerRoot") + File.separator + url);
-		if (file.isDirectory()) {
-			url = url + Config.get("AutoIndex", "index.html");
-			file = new File(Config.get("ServerRoot") + File.separator + url);
-		}
-		if (file.exists() && file.isFile()) {
-			try {
-				return writeFile(file);
-			} catch (IOException e) {
-				e.printStackTrace();
-				return null;
+		try {
+			String root = new File(Config.get("ServerRoot", "public")).getCanonicalPath();
+			File file = new File(root + File.separator + url);
+			if (file.isDirectory()) {
+				url = url + Config.get("AutoIndex", "index.html");
+				file = new File(root + File.separator + url);
 			}
+			// 安全路径
+			if (file.getCanonicalPath().startsWith(root)) {
+				if (file.exists() && file.isFile()) {
+					return writeFile(file);
+				}
+			} else {
+				// 恶意路径
+				status = 400;
+				Log.e("Safe", "Evil Path:" + file.getAbsolutePath());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
 		}
 		return null;
 	}
@@ -59,5 +68,10 @@ public class FileResponse implements RequestParser {
 		is.close();
 		Log.i("Run", request.getMethod() + ":" + request.getUrl());
 		return response;
+	}
+
+	@Override
+	public int getStatus() {
+		return this.status;
 	}
 }
