@@ -1,7 +1,7 @@
 /**
  * DXkite
  * FileParser.java
- * 2016年11月22日
+ * 2016锟斤拷11锟斤拷22锟斤拷
  */
 package cn.atd3.response;
 
@@ -22,8 +22,8 @@ public class FileResponse implements RequestParser {
 	private Request request;
 	private Response response;
 	private String url;
-	private int status = 0;
-
+	private int status = 200;
+	
 	public FileResponse() {
 		response = new Response();
 	}
@@ -33,19 +33,19 @@ public class FileResponse implements RequestParser {
 		request = rq;
 		url = rq.getUrl();
 		try {
-			String root = new File(Config.get("ServerRoot", "public")).getCanonicalPath();
+			String root = new File(Config.get("ServerRoot", "webapp")).getCanonicalPath();
 			File file = new File(root + File.separator + url);
 			if (file.isDirectory()) {
 				url = url + Config.get("AutoIndex", "index.html");
 				file = new File(root + File.separator + url);
 			}
-			// 安全路径
 			if (file.getCanonicalPath().startsWith(root)) {
 				if (file.exists() && file.isFile()) {
 					return writeFile(file);
+				}else {
+					status=404;
 				}
 			} else {
-				// 恶意路径
 				status = 400;
 				Log.e("Safe", "Evil Path:" + file.getAbsolutePath());
 			}

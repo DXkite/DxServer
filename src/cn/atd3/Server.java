@@ -1,7 +1,7 @@
 /**
  * DXkite
  * Server.java
- * 2016Äê11ÔÂ21ÈÕ
+ * 2016ï¿½ï¿½11ï¿½ï¿½21ï¿½ï¿½
  */
 package cn.atd3;
 
@@ -35,7 +35,7 @@ public class Server {
 				new RequestThread(socket).addParser(new FileResponse()).run();
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.e("Server", "Dead",e);
 		}
 	}
 

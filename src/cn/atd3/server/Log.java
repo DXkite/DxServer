@@ -1,7 +1,7 @@
 /**
  * DXkite
  * Log.java
- * 2016Äê11ÔÂ22ÈÕ
+ * 2016ï¿½ï¿½11ï¿½ï¿½22ï¿½ï¿½
  */
 package cn.atd3.server;
 
@@ -12,10 +12,14 @@ package cn.atd3.server;
 public class Log {
 	public static void i(String name,String info)
 	{
-		System.out.println(name+"\t"+info);
+		System.out.println("[Info]\t"+name+"\t"+info);
 	}
 	public static void e(String name,String info)
 	{
-		System.out.println(name+"\t"+info);
+		System.err.println("[Error]\t"+name+"\t"+info);
+	}
+	public static void e(String name,String info,Exception e)
+	{
+		System.err.println("[Error]\t"+name+"\t"+info+" Exception "+e.getClass().getName() + "- "+e.getMessage());
 	}
 }

@@ -1,7 +1,7 @@
 /**
  * DXkite
  * Mime.java
- * 2016Äê11ÔÂ21ÈÕ
+ * 2016ï¿½ï¿½11ï¿½ï¿½21ï¿½ï¿½
  */
 package cn.atd3.server;
 
@@ -40,10 +40,10 @@ public class Mime {
 			}
 			isr.close();
 		} catch (IOException e) {
-			Log.e("ServerInit","Load Mime Error:"+Config.get("Mime"));
+			Log.e("ServerInit","Load Mime Error:"+Config.get("Mime"),e);
 			e.printStackTrace();
 		}
-		Log.e("ServerInit","Load Mime");
+		Log.i("ServerInit","Load Mime");
 	}
 
 	public static String get(String type) {

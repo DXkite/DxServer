@@ -1,7 +1,7 @@
 /**
  * DXkite
  * Status.java
- * 2016Äê11ÔÂ21ÈÕ
+ * 2016ï¿½ï¿½11ï¿½ï¿½21ï¿½ï¿½
  */
 package cn.atd3.server;
 
@@ -35,10 +35,11 @@ public class Status {
 			// System.out.println(status);
 		} catch (IOException e) {
 			e.printStackTrace();
-			Log.e("ServerInit","Load Status Error:"+Config.get("State"));
+			Log.e("ServerInit","Load Status Error:"+Config.get("State"),e);
 		}
-		Log.e("ServerInit","Load Status");
+		Log.i("ServerInit","Load Status");
 	}
+	
 	public static String get(Integer state){
 		if (obj==null) { 
 			obj =new Status();

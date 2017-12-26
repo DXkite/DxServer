@@ -1,7 +1,7 @@
 /**
  * DXkite
  * Request.java
- * 2016Äê11ÔÂ21ÈÕ
+ * 2016ï¿½ï¿½11ï¿½ï¿½21ï¿½ï¿½
  */
 package cn.atd3.request;
 
@@ -20,14 +20,15 @@ public class Request {
 	String url="/";
 	public Request(InputStream is){
 		BufferedReader head=new BufferedReader(new InputStreamReader(is));
+		String str=null;
 		try {
-			String str=head.readLine();
+			str=head.readLine();
 			String[] rq=str.split("\\s",3);
 			method=rq[0];
 			url=rq[1];
 		} catch (Exception e) {
 			e.printStackTrace();
-			Log.e("RunError", "Unknown Request");
+			Log.e("RunError", "Unknown Request:"+str);
 		}
 	}
 	/**
@@ -41,6 +42,12 @@ public class Request {
 	 */
 	public String getUrl() {
 		return url;
+	}
+	public void setMethod(String method) {
+		this.method = method;
+	}
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	
 }
